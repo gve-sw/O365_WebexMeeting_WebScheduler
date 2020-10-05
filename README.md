@@ -50,9 +50,10 @@ An application to schedule a Webex Meeting and send an O365 calendar invite usin
       - The developer instance can also provide you with sample user accounts for testing. If you have admin access to the Webex Control Hub or a sandbox environment, you can create Webex accounts for them, too, either by [adding them manually](https://help.webex.com/en-us/v71ztb/Add-Users-Manually-in-Cisco-Webex-Control-Hub) or [using the CSV Template](https://help.webex.com/en-us/nlkiw8e/Add-Multiple-Users-in-Cisco-Webex-Control-Hub-with-the-CSV-Template). Using Microsoft Azure as IdP (also provided in the developer instance), it is simple to set up SSO Webex authentication for those accounts, too ([see here](https://help.webex.com/en-us/mfu88u/Cisco-Webex-Control-Hub-Single-Sign-On-Integration-with-Microsoft-Azure)).
    - **Application registration**: Register a new application in the Azure portal following [these steps](https://docs.microsoft.com/en-us/graph/auth-register-app-v2) and provide the following information in the process:
       1. On the *Register an application* page, give the application a name, choose "Accounts in any organizational directory (Any Azure AD directory - Multitenant)" as *Supported account types*, and set the *Redirect URI* to http://localhost:5000/o365oauth.
-      2. Once registered, on the *Overview* page, note the *Client ID* and *Tenant ID*. On the left navigation panel, go to the *Certificates & Secrets* page, and generate a new client secret under *+ New client secret*. Fill in the information, click *Add*, and note the *Value* of the secret.
-      3. On the left navigation panel, go to the *Authentication* page, and tick the box for *Access tokens* under the *Implicit grant* section. Click *Save* at the top of the page.
-      4. On the left navigation panel, go to the *API permissions* page, and click *+ Add a permission*. Choose *Microsoft Graph* > *Delegated permissions*. Select "Calendars.ReadWrite" and "Directory.Read.All", and click *Add permissions*. Then click *Grant admin consent for < your organization >* and select *Yes*.
+      2. Once registered, on the *Overview* page, note the *Client ID* and *Tenant ID*. These will be the values for the 'azure_client_id' and 'azure_client_tenant' variables in the `credentials.yml` file (see [installation instructions](#Installation)). 
+      3. On the left navigation panel, go to the *Certificates & Secrets* page, and generate a new client secret under *+ New client secret*. Fill in the information, click *Add*, and note the *Value* of the secret (this will be the value for the 'azure_client_secret' variable in the `credentials.yml` file (see [installation instructions](#Installation))).
+      4. On the left navigation panel, go to the *Authentication* page, and tick the box for *Access tokens* under the *Implicit grant* section. Click *Save* at the top of the page.
+      5. On the left navigation panel, go to the *API permissions* page, and click *+ Add a permission*. Choose *Microsoft Graph* > *Delegated permissions*. Select "Calendars.ReadWrite" and "Directory.Read.All", and click *Add permissions*. Then click *Grant admin consent for < your organization >* and select *Yes*.
 
 - **O365 Shared Calendar/Webex Meetings Scheduling Permissions**: For a user to be able to schedule an O365 event on behalf of another user and make the other user the host of the Webex Meeting, the user needs to have editing rights to the other user's O365 calendar and the other user must have provided the user with scheduling permissions in Webex. You can find information on how to set this up here: [Microsoft](https://help.webex.com/en-us/nkyeiue/Allow-Someone-to-Schedule-Webex-Meetings-on-Your-Behalf-in-Microsoft-Outlook-for-Windows) / [Mac](https://help.webex.com/en-us/y3xvmu/Allow-Someone-to-Schedule-Webex-Meetings-on-Your-Behalf-in-Microsoft-Outlook-for-Mac).  
 
@@ -64,7 +65,7 @@ An application to schedule a Webex Meeting and send an O365 calendar invite usin
 
 3. Navigate to the root directory of the repository, and install the requirements with `pip install -r requirements.txt`.
 
-4. Open the `credentials.yml` file, and fill in the required information. If unsure, the [prerequisites](#prerequisites) chapter outlines where to find the specific values.
+4. Open the `credentials.yml` file, and fill in the required information. If unsure, the [prerequisites](#Prerequisites) chapter outlines where to find the specific values.
 
 5. Set the following environment variable: `set FLASK_APP=main.py`.
 
